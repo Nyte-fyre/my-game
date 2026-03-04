@@ -1,5 +1,6 @@
 import 'package:flame/game.dart';
 import 'package:flame/components.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'sky.dart';
 import 'enemy_spawner.dart';
 import 'hud.dart';
@@ -28,6 +29,11 @@ class PathOfFyreGame extends FlameGame with HasCollisionDetection {
     if (!isGameOver && !isLevelingUp) {
       timeSurvived += dt;
     }
+
+    // Rotate tracks when one finishes
+    if (!isGameOver && !FlameAudio.bgm.isPlaying) {
+      SoundManager.playNextTrack();
+    }
   }
 
   void shakeScreen() {
@@ -54,6 +60,7 @@ class PathOfFyreGame extends FlameGame with HasCollisionDetection {
     add(sky);
     add(EnemySpawner(target: sky));
     add(Hud());
+    SoundManager.playNextTrack();
   }
 
   void skyDied() {
@@ -71,6 +78,7 @@ class PathOfFyreGame extends FlameGame with HasCollisionDetection {
   void resetGame() {
     isGameOver = false;
     isLevelingUp = false;
+    SoundManager.stopBgm();
     sky.resetStats();
     children.whereType<Enemy>().forEach((e) => e.removeFromParent());
     sky.removeFromParent();

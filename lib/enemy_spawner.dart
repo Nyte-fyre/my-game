@@ -11,6 +11,12 @@ class EnemySpawner extends Component with HasGameReference<PathOfFyreGame> {
 
   EnemySpawner({required this.target});
 
+  void resetSpawner() {
+    _spawnTimer = 0;
+    _spawnInterval = 3.0;
+    _enemiesSpawned = 0;
+  }
+
   @override
   void update(double dt) {
     if (game.isGameOver || game.isLevelingUp) return;
