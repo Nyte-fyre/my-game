@@ -12,8 +12,6 @@ class SoundManager {
     ]);
   }
 
-  static void update(double dt) {}
-
   static void playShoot() {
     FlameAudio.play('shoot.wav', volume: 0.4);
   }

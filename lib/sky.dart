@@ -45,6 +45,21 @@ class Sky extends SpriteComponent
     add(RectangleHitbox());
   }
 
+  void resetStats() {
+    maxHealth = 100;
+    currentHealth = 100;
+    damageCooldown = 0;
+    damagePerHit = 10;
+    attackInterval = 0.5;
+    attackRange = 200;
+    currentXp = 0;
+    xpToNextLevel = 100;
+    level = 1;
+    _shakeTimer = 0;
+    _flashTimer = 0;
+    _isFlashing = false;
+  }
+
   void flash() {
     _isFlashing = true;
     _flashTimer = _flashDuration;

@@ -19,15 +19,6 @@ class PathOfFyreGame extends FlameGame with HasCollisionDetection {
   @override
   Future<void> onLoad() async {
     await SoundManager.preloadAll();
-    add(
-      SpriteComponent(
-        sprite: await Sprite.load('background.jpg'),
-        size: size,
-        position: Vector2(size.x, size.y),
-        anchor: Anchor.bottomRight,
-        priority: -1,
-      ),
-    );
     add(MainMenu());
   }
 
@@ -37,7 +28,6 @@ class PathOfFyreGame extends FlameGame with HasCollisionDetection {
     if (!isGameOver && !isLevelingUp) {
       timeSurvived += dt;
     }
-    SoundManager.update(dt);
   }
 
   void shakeScreen() {
@@ -81,6 +71,7 @@ class PathOfFyreGame extends FlameGame with HasCollisionDetection {
   void resetGame() {
     isGameOver = false;
     isLevelingUp = false;
+    sky.resetStats();
     children.whereType<Enemy>().forEach((e) => e.removeFromParent());
     sky.removeFromParent();
     children.whereType<EnemySpawner>().forEach((e) => e.removeFromParent());
