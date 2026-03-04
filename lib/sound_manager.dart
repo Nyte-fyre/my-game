@@ -11,12 +11,12 @@ class SoundManager {
 
   static final Random _random = Random();
   static String? _lastPlayed;
+  static bool _isStartingTrack = false;
 
   static Future<void> preloadAll() async {
     FlameAudio.bgm.initialize();
     await FlameAudio.audioCache.loadAll([
       'game_over.wav',
-      'game_start.wav',
       'hit.wav',
       'level.wav',
       'shoot.wav',
@@ -41,26 +41,27 @@ class SoundManager {
 
   static void playGameOver() {
     FlameAudio.bgm.stop();
+    _isStartingTrack = false;
     FlameAudio.play('game_over.wav', volume: 0.8);
   }
 
-  static void playGameStart() {
-    FlameAudio.play('game_start.wav', volume: 0.8);
-  }
+  static Future<void> playNextTrack() async {
+    if (_isStartingTrack) return;
+    _isStartingTrack = true;
 
-  static void playNextTrack() {
-    // Pick a random track that isn't the last one played
     String next;
     do {
       next = _bgmTracks[_random.nextInt(_bgmTracks.length)];
     } while (next == _lastPlayed && _bgmTracks.length > 1);
 
     _lastPlayed = next;
-    FlameAudio.bgm.play(next, volume: 0.5);
+    await FlameAudio.bgm.play(next, volume: 0.5);
+    _isStartingTrack = false;
   }
 
   static void stopBgm() {
     FlameAudio.bgm.stop();
+    _isStartingTrack = false;
   }
 
   static void pauseBgm() {

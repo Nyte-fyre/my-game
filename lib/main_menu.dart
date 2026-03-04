@@ -2,7 +2,6 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'path_of_fyre_game.dart';
-import 'sound_manager.dart';
 
 class MainMenu extends PositionComponent with HasGameReference<PathOfFyreGame> {
   late final Paint _bgPaint;
@@ -47,7 +46,6 @@ class MainMenu extends PositionComponent with HasGameReference<PathOfFyreGame> {
   void render(Canvas canvas) {
     canvas.drawRect(size.toRect(), _bgPaint);
 
-    // Title
     _drawText(
       canvas,
       'PATH OF FYRE',
@@ -58,7 +56,6 @@ class MainMenu extends PositionComponent with HasGameReference<PathOfFyreGame> {
       bold: true,
     );
 
-    // Tagline
     _drawText(
       canvas,
       'One warrior. Endless darkness.',
@@ -68,7 +65,6 @@ class MainMenu extends PositionComponent with HasGameReference<PathOfFyreGame> {
       Colors.grey,
     );
 
-    // Controls
     _drawText(
       canvas,
       'Arrow Keys to Move',
@@ -94,7 +90,6 @@ class MainMenu extends PositionComponent with HasGameReference<PathOfFyreGame> {
       Colors.white,
     );
 
-    // Start prompt
     _drawText(
       canvas,
       'Press SPACE to Begin',
@@ -105,7 +100,6 @@ class MainMenu extends PositionComponent with HasGameReference<PathOfFyreGame> {
       bold: true,
     );
 
-    // Version
     _drawText(canvas, 'v0.1.0', size.x / 2, size.y * 0.92, 14, Colors.grey);
   }
 
@@ -116,7 +110,6 @@ class MainMenu extends PositionComponent with HasGameReference<PathOfFyreGame> {
     );
 
     if (spacePressed && !_spaceWasPressed) {
-      SoundManager.playGameStart();
       game.startGame();
       removeFromParent();
     }

@@ -31,7 +31,7 @@ class PathOfFyreGame extends FlameGame with HasCollisionDetection {
     }
 
     // Rotate tracks when one finishes
-    if (!isGameOver && !FlameAudio.bgm.isPlaying) {
+    if (!isGameOver && !isLevelingUp && !FlameAudio.bgm.isPlaying) {
       SoundManager.playNextTrack();
     }
   }
