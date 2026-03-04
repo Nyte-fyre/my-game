@@ -13,6 +13,11 @@ class SoundManager {
   static String? _lastPlayed;
   static bool _isStartingTrack = false;
 
+  // Cooldown trackers
+  static double _shootCooldown = 0;
+  static double _hitCooldown = 0;
+  static const double _sfxCooldownTime = 0.08;
+
   static Future<void> preloadAll() async {
     FlameAudio.bgm.initialize();
     await FlameAudio.audioCache.loadAll([
@@ -27,11 +32,20 @@ class SoundManager {
     ]);
   }
 
+  static void update(double dt) {
+    if (_shootCooldown > 0) _shootCooldown -= dt;
+    if (_hitCooldown > 0) _hitCooldown -= dt;
+  }
+
   static void playShoot() {
+    if (_shootCooldown > 0) return;
+    _shootCooldown = _sfxCooldownTime;
     FlameAudio.play('shoot.wav', volume: 0.4);
   }
 
   static void playHit() {
+    if (_hitCooldown > 0) return;
+    _hitCooldown = _sfxCooldownTime;
     FlameAudio.play('hit.wav', volume: 0.7);
   }
 
